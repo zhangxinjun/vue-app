@@ -7,5 +7,5 @@
 
 <style>
 /* 引入bese清除默认样式 */
-@import "./assets/css/base.css"
+@import "assets/css/base.css"
 </style>
