@@ -8,9 +8,15 @@
 
 <script>
 import NavBar from "common/common/navbar/NavBar"
+import {getMenuDatide} from "network/home"
 export default {
   components:{
     NavBar
+  },
+  created () {
+    getMenuDatide().then( res => {
+      console.log(res)
+    })
   }
 }
 </script>
