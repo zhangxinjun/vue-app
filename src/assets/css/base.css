@@ -1,10 +1,10 @@
 /* 引入normalize.css */
-@import "./normalize.css"
+@import "./normalize.css";
 /*公共样式*/
 /*css初始化*/
-html,body,ul,li,ol,ul,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,form,fieldset{
-    margin: 0;
-    padding: 0;
+html,body,ul,li,ol,ul,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,form,fieldset {
+    margin : 0;
+    padding : 0;
 }
 /*fieldset组合表单中的相关元素*/
 fieldset,img,input,button{
