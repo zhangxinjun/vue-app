@@ -1,5 +1,5 @@
 import axios from "axios";
-export function request(config) {
+export function request (config) {
     // 创建axios的实例化对象，并设置一些配置
     const instance = axios.create({
         baseURL: 'http://106.54.54.237:8000',
