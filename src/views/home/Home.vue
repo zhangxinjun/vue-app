@@ -5,18 +5,17 @@
       <div slot="center">这是home组件的导航</div>
     </NavBar>
     <!-- 轮播组件 -->
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-      <van-swipe-item v-for="item in banners" :key="item.index">
-        <a :href="item.link">
-          <img :src="item.image" alt="">
-        </a>
-      </van-swipe-item>
-    </van-swipe>
+    <HomeSwiper :banners="banners"></HomeSwiper>
+    <!-- 推荐组件 -->
+    <HomeCommend></HomeCommend>
   </div>
 </template>
 
 <script>
 import NavBar from "common/common/navbar/NavBar";
+import HomeSwiper from "./HomeSwiper"
+import HomeCommend from "./HomeRecommend"
+
 import { getMenuDatide } from "network/home";
 export default {
   data () {
@@ -25,10 +24,13 @@ export default {
     }
   },
   components: {
-    NavBar
+    NavBar,
+    HomeSwiper,
+    HomeCommend
   },
   created () {
     getMenuDatide().then(res => {
+      console.log(res.data)
       this.banners = res.data.banner.list
     });
   }
@@ -40,14 +42,5 @@ export default {
   color: #fff;
   background: #ff0088;
 }
-.my-swipe .van-swipe-item {
-    color: #fff;
-    font-size: 20px;
-    line-height: 150px;
-    text-align: center;
-    background-color: #39a9ed;
-  }
-  .my-swipe img{
-    width:100%
-  }
+
 </style>
