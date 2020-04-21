@@ -17,7 +17,7 @@ export default {
       type: Array
     }
   },
-  data() {
+  data () {
     return {};
   }
 };

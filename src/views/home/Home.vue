@@ -1,13 +1,12 @@
 <template>
-  <div>
+  <div class="home">
     <!-- 头部 -->
-    <NavBar class="navbar">
-      <div slot="center">这是home组件的导航</div>
-    </NavBar>
+    <NavBar class="navbar"><div slot="center">这是home组件的导航</div></NavBar>
     <!-- 轮播组件 -->
     <HomeSwiper :banners="banners"></HomeSwiper>
     <!-- 推荐组件 -->
-    <HomeCommend></HomeCommend>
+    <HomeCommend :recommend="recommend"></HomeCommend>
+    
   </div>
 </template>
 
@@ -20,7 +19,8 @@ import { getMenuDatide } from "network/home";
 export default {
   data () {
     return {
-      banners : []
+      banners : [],
+      recommend : []
     }
   },
   components: {
@@ -31,16 +31,25 @@ export default {
   created () {
     getMenuDatide().then(res => {
       console.log(res.data)
-      this.banners = res.data.banner.list
+      this.banners = res.data.banner.list;
+      this.recommend = res.data.recommend.list
     });
   }
 };
 </script>
 
 <style scoped>
+.home{
+  padding-top: 44px
+}
 .navbar {
   color: #fff;
   background: #ff0088;
+  position: fixed;
+  top:0;
+  left:0;
+  right: 0;
+  z-index: 3
 }
 
 </style>
