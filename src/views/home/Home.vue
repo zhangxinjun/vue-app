@@ -6,15 +6,21 @@
     <HomeSwiper :banners="banners"></HomeSwiper>
     <!-- 推荐组件 -->
     <HomeCommend :recommend="recommend"></HomeCommend>
-    
+    <!-- 导航控制组件 -->
+    <TabControl :tabControl="['潮流','推荐','新款']"></TabControl>
   </div>
 </template>
 
 <script>
+// 导入的公共组件
 import NavBar from "common/common/navbar/NavBar";
-import HomeSwiper from "./HomeSwiper"
-import HomeCommend from "./HomeRecommend"
+import TabControl from "common/common/tabcontrol/TabControl";
 
+// 导入的子组件
+import HomeSwiper from "./HomeSwiper";
+import HomeCommend from "./HomeRecommend";
+
+// 导入的其他比如方法之类的
 import { getMenuDatide } from "network/home";
 export default {
   data () {
@@ -25,6 +31,7 @@ export default {
   },
   components: {
     NavBar,
+    TabControl,
     HomeSwiper,
     HomeCommend
   },
