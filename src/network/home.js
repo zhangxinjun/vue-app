@@ -5,3 +5,12 @@ export function getMenuDatide (){
         url : "/home/multidata"
     })
 }
+export function GitGoodsList (type,page) {
+    return request({
+        url : "/home/data",
+        params : {
+            type,
+            page
+        }
+    })
+}
