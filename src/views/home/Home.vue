@@ -9,7 +9,7 @@
     <!-- 导航控制组件 -->
     <TabControl :tabControl="['潮流','推荐','新款']"></TabControl>
     <!-- 商品列表组件 -->
-    <Goods></Goods>
+    <Goods :goods="goods['pop'].list"></Goods>
   </div>
 </template>
 
@@ -77,7 +77,7 @@ export default {
 
 <style scoped>
 .home{
-  padding-top: 44px
+  padding: 44px 0
 }
 .navbar {
   color: #fff;
