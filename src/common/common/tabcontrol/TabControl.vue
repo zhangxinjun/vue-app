@@ -27,7 +27,9 @@ export default {
   },
   methods: {
     controlClick (index) {
-      this.numControl = index
+      this.numControl = index;
+      // 子父通信将当前点击的tablecontrol的index传出去
+      this.$emit("tableClick",index)
     }
   }
 };
