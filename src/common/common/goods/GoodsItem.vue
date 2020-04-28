@@ -7,7 +7,7 @@
       <div>
         <p class="title">{{goodsItem.title}}</p>
         <p>
-          <span> 原价:<s class="oldPrice">{{goodsItem.price}}</s></span>
+          <span> 原价:<s class="oldPrice">{{goodsItem.orgPrice}}</s></span>
           <span>现价: ￥<b>{{goodsItem.price}}</b></span>
           </p>
       </div>
