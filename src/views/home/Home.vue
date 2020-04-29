@@ -4,7 +4,7 @@
     <NavBar class="navbar">
       <div slot="center">这是home组件的导航</div>
     </NavBar>
-    <Scroll class="content">
+    <Scroll class="content" ref="scroll">
       <!-- 轮播组件 -->
       <HomeSwiper :banners="banners"></HomeSwiper>
       <!-- 推荐组件 -->
@@ -14,7 +14,8 @@
       <!-- 商品列表组件 -->
       <Goods :goods="goods[tableControl].list"></Goods>
     </Scroll>
-    
+    <!-- 返回顶部组件 监听组件的原生事件需要使用事件修饰符native -->
+    <BackTop @click.native="backTop"></BackTop>
   </div>
 </template>
 
@@ -24,6 +25,7 @@ import NavBar from "common/common/navbar/NavBar";
 import TabControl from "common/common/tabcontrol/TabControl";
 import Goods from "common/common/goods/Goods";
 import Scroll from "common/common/scroll/Scroll"
+import BackTop from "common/common/backtop/BackTop"
 
 // 导入的子组件
 import HomeSwiper from "./HomeSwiper";
@@ -55,6 +57,7 @@ export default {
     TabControl,
     Goods,
     Scroll,
+    BackTop,
     HomeSwiper,
     HomeCommend
   },
@@ -93,18 +96,31 @@ export default {
     GitHomeGoods (type) {
       const page = this.goods[type].page + 1;
       GitGoodsList (type, page) .then(res => {
-        console.log(res);
+        // console.log(res);
         this.goods[type].list = [...res.data.list];
         // 每次数据请求完成后都对对应的页码进行加1操作用于实现下拉加载更多的功能
         this.goods[type].page += 1;
       });
+    },
+    backTop () {
+      console.log(this.$refs.scroll.bs.scrollTo)
+      this.$refs.scroll.bs.scrollTo(0,0,500)
     }
   }
 };
 </script>
 
 <style scoped>
+.content{
+  /* height: 100vh; */
+  position: absolute;
+  top:148px;
+  right:0;
+  bottom:49px;
+  left:0
+}
 .home {
+  height: 100vh;
   padding: 44px 0;
   position: relative
 }
@@ -117,13 +133,5 @@ export default {
   right: 0;
   z-index: 3;
 }
-.content{
-  overflow: hidden;
-  height: 100vh;
-  position: absolute;
-  top:44px;
-  right:0;
-  bottom:49px;
-  left:0
-}
+
 </style>

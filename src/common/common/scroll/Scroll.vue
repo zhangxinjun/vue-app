@@ -26,10 +26,7 @@ export default {
             // 3：会实时监听滚动位置，手指松开时的惯性滚动的时候的位置也会监听
             probeType : 3
         });
-        // 滚动完成的时候触发
-        // bs.on ("scrollEnd", () => {
-        //     console.log("滚动结束了")
-        // }) 
+       
     }
    
 }
