@@ -4,14 +4,17 @@
     <NavBar class="navbar">
       <div slot="center">这是home组件的导航</div>
     </NavBar>
-    <!-- 轮播组件 -->
-    <HomeSwiper :banners="banners"></HomeSwiper>
-    <!-- 推荐组件 -->
-    <HomeCommend :recommend="recommend"></HomeCommend>
-    <!-- 导航控制组件 -->
-    <TabControl :tabControl="['潮流','推荐','新款']" @tableClick="tableClick"></TabControl>
-    <!-- 商品列表组件 -->
-    <Goods :goods="goods[tableControl].list"></Goods>
+    <Scroll class="content">
+      <!-- 轮播组件 -->
+      <HomeSwiper :banners="banners"></HomeSwiper>
+      <!-- 推荐组件 -->
+      <HomeCommend :recommend="recommend"></HomeCommend>
+      <!-- 导航控制组件 -->
+      <TabControl :tabControl="['潮流','推荐','新款']" @tableClick="tableClick"></TabControl>
+      <!-- 商品列表组件 -->
+      <Goods :goods="goods[tableControl].list"></Goods>
+    </Scroll>
+    
   </div>
 </template>
 
@@ -20,6 +23,7 @@
 import NavBar from "common/common/navbar/NavBar";
 import TabControl from "common/common/tabcontrol/TabControl";
 import Goods from "common/common/goods/Goods";
+import Scroll from "common/common/scroll/Scroll"
 
 // 导入的子组件
 import HomeSwiper from "./HomeSwiper";
@@ -50,6 +54,7 @@ export default {
     NavBar,
     TabControl,
     Goods,
+    Scroll,
     HomeSwiper,
     HomeCommend
   },
@@ -101,6 +106,7 @@ export default {
 <style scoped>
 .home {
   padding: 44px 0;
+  position: relative
 }
 .navbar {
   color: #fff;
@@ -110,5 +116,14 @@ export default {
   left: 0;
   right: 0;
   z-index: 3;
+}
+.content{
+  overflow: hidden;
+  height: 100vh;
+  position: absolute;
+  top:44px;
+  right:0;
+  bottom:49px;
+  left:0
 }
 </style>
