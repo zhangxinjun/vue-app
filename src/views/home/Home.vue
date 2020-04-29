@@ -103,7 +103,7 @@ export default {
       });
     },
     backTop () {
-      console.log(this.$refs.scroll.bs.scrollTo)
+      // 点击的时候通过this.$refs.scroll获取scroll组件的实例从而得到bs进一步调用bs的scrollTo方法实现返回顶部功能
       this.$refs.scroll.bs.scrollTo(0,0,500)
     }
   }
@@ -111,14 +111,7 @@ export default {
 </script>
 
 <style scoped>
-.content{
-  /* height: 100vh; */
-  position: absolute;
-  top:148px;
-  right:0;
-  bottom:49px;
-  left:0
-}
+
 .home {
   height: 100vh;
   padding: 44px 0;
@@ -133,5 +126,12 @@ export default {
   right: 0;
   z-index: 3;
 }
-
+.content{
+  /* height: 100vh; */
+  position: absolute;
+  top:148px;
+  right:0;
+  bottom:49px;
+  left:0
+}
 </style>
