@@ -14,6 +14,10 @@ export default {
     probeType : {
       type : Number,
       default : 0
+    },
+    pullUpLoad : {
+      type :Boolean,
+      default : false
     }
   },
   data () {
@@ -32,11 +36,18 @@ export default {
       // 2：会实时监听滚动位置，但是手指松开的时候的惯性滚动的时候的位置不会监听
       // 3：会实时监听滚动位置，手指松开时的惯性滚动的时候的位置也会监听
       // 根据使用时传递过来的数字决定是否实时监听
-      probeType: this.probeType
+      probeType: this.probeType,
+      // 用于做上拉加载功能，
+      pullUpLoad : this.pullUpLoad
     });
     // 获取实时滚动位置 为了保证this应使用箭头函数，普通函数this会出问题
    this.bs.on ("scroll",(pos) => {
       this.$emit("scrollPosition",pos)
+    }),
+    // 监听滚动到底部的事件
+    this.bs.on ("pullingUp",() => {
+      // 将改事件传递给父组件
+      this.$emit("pullingUp")
     })
   }
 };

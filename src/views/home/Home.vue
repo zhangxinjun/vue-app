@@ -4,7 +4,7 @@
     <NavBar class="navbar">
       <div slot="center">这是home组件的导航</div>
     </NavBar>
-    <Scroll class="content" ref="scroll" :probe-type="3" @scrollPosition="scrollPosition">
+    <Scroll class="content" ref="scroll" :probe-type="3" @scrollPosition="scrollPosition" @pullingUp="pullingUp" :pullUpLoad="true">
       <!-- 轮播组件 -->
       <HomeSwiper :banners="banners"></HomeSwiper>
       <!-- 推荐组件 -->
@@ -99,13 +99,13 @@ export default {
       const page = this.goods[type].page + 1;
       GitGoodsList (type, page) .then(res => {
         // console.log(res);
-        this.goods[type].list = [...res.data.list];
+        // this.goods[type].list = [...res.data.list];
+        this.goods[type].list.push(...res.data.list)
         // 每次数据请求完成后都对对应的页码进行加1操作用于实现下拉加载更多的功能
         this.goods[type].page += 1;
       });
     },
     backTop () {
-      console.log(this)
       // 点击的时候通过this.$refs.scroll获取scroll组件的实例从而得到bs进一步调用bs的scrollTo方法实现返回顶部功能
       this.$refs.scroll.bs.scrollTo(0,0,500)
     },
@@ -113,6 +113,13 @@ export default {
     scrollPosition (pos) {
       // 根据滚动位置决定是否显示
       this.backTopShow = -pos.y>1000
+    },
+    // 滚动到底部的事件
+    pullingUp () {
+      // 改事件触发的时候重新发起请求请求下一页的数据
+     this.GitHomeGoods (this.tableControl)
+    //  调用该方法才能实现多次的上拉加载
+     this.$refs.scroll.bs.finishPullUp()
     }
   }
 };
