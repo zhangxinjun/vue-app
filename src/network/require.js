@@ -1,10 +1,11 @@
 import axios from "axios";
-export function request (config) {
+// eslint-disable-next-line space-before-function-paren
+export function request(config) {
     // 创建axios的实例化对象，并设置一些配置
     const instance = axios.create({
-        baseURL: 'http://123.207.32.32:8000/api/h8',
-        timeout : 8000
-      });
+        baseURL: 'http://123.207.32.32:8000/api/m3',
+        timeout: 8000
+    });
     // 添加请求拦截器
     instance.interceptors.request.use(config => {
         // 在发送请求之前做些什么
@@ -15,7 +16,7 @@ export function request (config) {
     });
 
     // 添加响应拦截器
-    instance.interceptors.response.use( res => {
+    instance.interceptors.response.use(res => {
         // 对响应数据做点什么
         return res.data;
     }, error => {

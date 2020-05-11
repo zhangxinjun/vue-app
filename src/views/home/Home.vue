@@ -4,7 +4,7 @@
     <NavBar class="navbar">
       <div slot="center">这是home组件的导航</div>
     </NavBar>
-    <Scroll class="content" ref="scroll">
+    <Scroll class="content" ref="scroll" :probe-type="3" @scrollPosition="scrollPosition">
       <!-- 轮播组件 -->
       <HomeSwiper :banners="banners"></HomeSwiper>
       <!-- 推荐组件 -->
@@ -15,7 +15,7 @@
       <Goods :goods="goods[tableControl].list"></Goods>
     </Scroll>
     <!-- 返回顶部组件 监听组件的原生事件需要使用事件修饰符native -->
-    <BackTop @click.native="backTop"></BackTop>
+    <BackTop @click.native="backTop" v-show="backTopShow"></BackTop>
   </div>
 </template>
 
@@ -49,7 +49,9 @@ export default {
         sell: { page: 0, list: [] }
       },
       // 和tablecontrol配合使用控制页面展示数据的类型,默认展示pop的数据
-      tableControl: "pop"
+      tableControl: "pop",
+      // 返回顶部的显示与隐藏
+      backTopShow: false
     };
   },
    components: {
@@ -103,8 +105,14 @@ export default {
       });
     },
     backTop () {
+      console.log(this)
       // 点击的时候通过this.$refs.scroll获取scroll组件的实例从而得到bs进一步调用bs的scrollTo方法实现返回顶部功能
       this.$refs.scroll.bs.scrollTo(0,0,500)
+    },
+    // 子父通信将子组件中监听的位置传递过来
+    scrollPosition (pos) {
+      // 根据滚动位置决定是否显示
+      this.backTopShow = -pos.y>1000
     }
   }
 };
