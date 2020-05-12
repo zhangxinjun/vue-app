@@ -71,6 +71,14 @@ export default {
     this.GitHomeGoods("new");
     this.GitHomeGoods("sell");
   },
+  mounted () {
+    // 接受在Goodsitem组件传递过来的图片加载事件
+    this.$bus.$on("itemImgLoad",() => {
+      // 重新计算 BetterScroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常
+      // 在图片加载完成之后调用refresh方法让betterscroll重新计算滚动高度
+      this.$refs.scroll.bs.refresh()
+    })
+  },
   methods: {
     // 接受tablecontrol组件传递过来的index
     tableClick (index) {
@@ -118,7 +126,7 @@ export default {
     pullingUp () {
       // 改事件触发的时候重新发起请求请求下一页的数据
      this.GitHomeGoods (this.tableControl)
-    //  调用该方法才能实现多次的上拉加载
+      //  调用该方法才能实现多次的上拉加载
      this.$refs.scroll.bs.finishPullUp()
     }
   }
