@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap" ref="wrapper">
+  <div class="wrap" ref="wrap">
     <div>
       <slot></slot>
     </div>
@@ -28,7 +28,7 @@ export default {
   // 在mounted生命周期内才能获取元素的dom对象，在此生命周期内dom挂载已经完成
   mounted () {
     // 实例化Scroll对象
-    this.bs = new BScroll(this.$refs.wrapper, {
+    this.bs = new BScroll(this.$refs.wrap, {
       //  BetterScroll 默认会阻止浏览器的原生 click 事件。当设置为 true，BetterScroll 会派发一个 click 事件
       click: true,
       //  默认值0，可选值1,2,3；
@@ -49,6 +49,13 @@ export default {
       // 将改事件传递给父组件
       this.$emit("pullingUp")
     })
+  },
+  methods: {
+    // 重新计算滚动高度，在此处封装一层以简化在home组件的写法
+    refresh (){
+      this.bs.refresh();
+      console.log("======")
+    }
   }
 };
 </script>

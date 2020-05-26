@@ -72,14 +72,29 @@ export default {
     this.GitHomeGoods("sell");
   },
   mounted () {
+    const refresh = this.debounce(this.$refs.scroll.refresh,300)
     // 接受在Goodsitem组件传递过来的图片加载事件
     this.$bus.$on("itemImgLoad",() => {
       // 重新计算 BetterScroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常
       // 在图片加载完成之后调用refresh方法让betterscroll重新计算滚动高度
-      this.$refs.scroll.bs.refresh()
+      // this.$refs.scroll.bs.refresh()
+      // 在每张图片加载完成的时候都调用你一次防抖函数
+      refresh()
     })
   },
   methods: {
+    // 防抖函数
+    debounce (func,delay) {
+      let timer = null;
+      // 展开运算符，可以使函数传入多个参数
+      return function (...arg) {
+        if (timer) clearTimeout(timer);
+       timer =  setTimeout(() => {
+        //  利用apply方法调用函数
+          func.apply(this,arg)
+        },delay)
+      }
+    },
     // 接受tablecontrol组件传递过来的index
     tableClick (index) {
       // 根据传过来的index不同决定到底展示哪种类型的数据
