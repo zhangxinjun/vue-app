@@ -54,7 +54,6 @@ export default {
     // 重新计算滚动高度，在此处封装一层以简化在home组件的写法
     refresh (){
       this.bs.refresh();
-      console.log("======")
     }
   }
 };

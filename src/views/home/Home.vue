@@ -4,13 +4,16 @@
     <NavBar class="navbar">
       <div slot="center">这是home组件的导航</div>
     </NavBar>
+    <!-- 用来实现吸顶效果的tabControl组件，由于betterscroll原因直接给改组件fixed定位是无法实现吸顶效果的 -->
+    <TabControl :tabControl="['潮流','推荐','新款']" @tableClick="tableClick" ref="tabControl1" class="fixedTableControl" v-show="isTabControl"></TabControl>
+    <!-- betterScroll组件 -->
     <Scroll class="content" ref="scroll" :probe-type="3" @scrollPosition="scrollPosition" @pullingUp="pullingUp" :pullUpLoad="true">
       <!-- 轮播组件 -->
-      <HomeSwiper :banners="banners"></HomeSwiper>
+      <HomeSwiper :banners="banners" @swiperImgLoad="swiperImgLoad"></HomeSwiper>
       <!-- 推荐组件 -->
       <HomeCommend :recommend="recommend"></HomeCommend>
       <!-- 导航控制组件 -->
-      <TabControl :tabControl="['潮流','推荐','新款']" @tableClick="tableClick"></TabControl>
+      <TabControl :tabControl="['潮流','推荐','新款']" @tableClick="tableClick" ref="tabControl2"></TabControl>
       <!-- 商品列表组件 -->
       <Goods :goods="goods[tableControl].list"></Goods>
     </Scroll>
@@ -51,7 +54,11 @@ export default {
       // 和tablecontrol配合使用控制页面展示数据的类型,默认展示pop的数据
       tableControl: "pop",
       // 返回顶部的显示与隐藏
-      backTopShow: false
+      backTopShow: false,
+      // 记录tableControlTop距离文档顶部的距离
+      tableControlTop : 0,
+      // 控制显示吸顶效果的tabcontrol组件是否显示
+      isTabControl : false
     };
   },
    components: {
@@ -62,6 +69,7 @@ export default {
     BackTop,
     HomeSwiper,
     HomeCommend
+    
   },
   created () {
     // 获取轮播及更多的数据
@@ -109,6 +117,9 @@ export default {
           this.tableControl = "sell";
           break;
       }
+      // 解决点击的时候激活状态不同步的问题
+      this.$refs.tabControl2.numControl = index;
+      this.$refs.tabControl1.numControl = index;
     },
     // 获取banner以及banner下部更多部分的数据
     GitBannerMore () {
@@ -134,8 +145,13 @@ export default {
     },
     // 子父通信将子组件中监听的位置传递过来
     scrollPosition (pos) {
-      // 根据滚动位置决定是否显示
-      this.backTopShow = -pos.y>1000
+      // 根据滚动位置决定是否返回顶部按钮是否显示
+      this.backTopShow = -pos.y>1000;
+      if (-pos.y >= this.tableControlTop) {
+        this.isTabControl = true;
+      }else{
+        this.isTabControl = false;
+      }
     },
     // 滚动到底部的事件
     pullingUp () {
@@ -143,6 +159,13 @@ export default {
      this.GitHomeGoods (this.tableControl)
       //  调用该方法才能实现多次的上拉加载
      this.$refs.scroll.bs.finishPullUp()
+    },
+    // 轮播图图片加载完成事件
+    swiperImgLoad () {
+      // this.$refs.tabControl不能拿到组件的元素本身，$el可以得到组件中是元素本身，只有拿到元素本身才能使用offsetTop方法获得元素本身距离文档顶部的距离
+      // 将得到的距离文档顶部的距离保存下来
+      this.tableControlTop = this.$refs.tabControl2.$el.offsetTop;
+      console.log( this.tableControlTop)
     }
   }
 };
@@ -152,24 +175,32 @@ export default {
 
 .home {
   height: 100vh;
-  padding: 44px 0;
+  /* padding: 44px 0; */
   position: relative
 }
 .navbar {
   color: #fff;
   background: #ff0088;
-  position: fixed;
+  position: relative;
+  z-index: 3;
+  /* 因为使用有betterscroll所以并不需要给nav固定定位 */
+  /* position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 3;
+  z-index: 3; */
 }
 .content{
   /* height: 100vh; */
   position: absolute;
-  top:148px;
+  top:44px;
   right:0;
   bottom:49px;
   left:0
+}
+.fixedTableControl{
+  position:relative;
+  z-index: 9;
+  background:#fff;
 }
 </style>
