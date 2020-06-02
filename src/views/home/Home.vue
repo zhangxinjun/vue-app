@@ -58,7 +58,9 @@ export default {
       // 记录tableControlTop距离文档顶部的距离
       tableControlTop : 0,
       // 控制显示吸顶效果的tabcontrol组件是否显示
-      isTabControl : false
+      isTabControl : false,
+      // 用于记录home组件离开时候的位置
+      saveY : 0
     };
   },
    components: {
@@ -89,6 +91,18 @@ export default {
       // 在每张图片加载完成的时候都调用你一次防抖函数
       refresh()
     })
+  },
+  // 被keep-alive缓存的组件激活的时候调用
+  activated () {
+    // 在回到home组件的时候让其滚动到当初离开时的位置
+    this.$refs.scroll.bs.scrollTo(0,this.saveY,0);
+    // 调用refresh方法重新刷新betterscroll以防止出现莫名奇妙的问题
+    this.$refs.scroll.bs.refresh();
+  },
+  // 被keep-alive缓存的组件停用时调用
+  deactivated () {
+    // 在离开home组件的时候得到当前的滚动位置并记录
+    this.saveY = this.$refs.scroll.bs.y;
   },
   methods: {
     // 防抖函数
